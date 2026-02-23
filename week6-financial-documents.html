@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Week 6: Financial Documents | SQA Education</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Poppins&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#5B5091;--primary-light:#7B6DB5;--primary-dark:#4A4080;
+  --accent:#f59e0b;--bg:linear-gradient(135deg,#5B5091 0%,#7B6DB5 100%);
+  --card:#ffffff;--text:#333;--text-light:#666;
+  --success:#10b981;--error:#ef4444;--border:#e0e0e0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);min-height:100vh;padding:15px;color:var(--text);line-height:1.6;}
+.container{max-width:700px;margin:0 auto;padding:15px;min-height:100vh;}
+.header{text-align:center;padding:30px 0;}
+.week-badge{display:inline-block;background:var(--primary);color:#fff;font-size:0.8rem;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:12px;letter-spacing:0.5px;}
+h1{font-family:'Poppins',sans-serif;font-size:2rem;color:var(--primary-dark);margin-bottom:8px;}
+.subtitle{font-size:1rem;color:var(--text-light);}
+.card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 4px 20px rgba(91,80,145,0.08);}
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-weight:600;margin-bottom:8px;color:var(--primary-dark);}
+.form-input{width:100%;padding:14px 16px;border:2px solid var(--border);border-radius:10px;font-size:1rem;font-family:inherit;transition:all 0.2s;}
+.form-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(91,80,145,0.1);}
+.form-select{width:100%;padding:14px 16px;border:2px solid var(--border);border-radius:10px;font-size:1rem;font-family:inherit;transition:all 0.2s;background:#fff;cursor:pointer;}
+.form-select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(91,80,145,0.1);}
+.level-grid{display:grid;gap:12px;}
+.level-btn{background:linear-gradient(135deg,#f5f3ff,#ede9ff);border:2px solid var(--border);border-radius:12px;padding:18px;cursor:pointer;text-align:left;transition:all 0.2s;}
+.level-btn:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 4px 15px rgba(91,80,145,0.15);}
+.level-btn.selected{border-color:var(--primary);background:linear-gradient(135deg,#ede9ff,#ddd6fe);}
+.level-name{font-weight:700;font-size:1.1rem;color:var(--primary-dark);margin-bottom:4px;}
+.level-desc{font-size:0.9rem;color:var(--text-light);}
+.btn{padding:14px 28px;border-radius:10px;border:none;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit;}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;box-shadow:0 4px 15px rgba(91,80,145,0.3);width:100%;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(91,80,145,0.4);}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.btn-secondary{background:#f5f3ff;color:var(--primary);border:2px solid var(--border);}
+.btn-secondary:hover{background:#ede9ff;border-color:var(--primary);}
+.reading-content{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:12px;padding:24px;margin:20px 0;line-height:1.8;}
+.reading-title{font-family:'Poppins',sans-serif;font-size:1.4rem;color:#166534;margin-bottom:15px;display:flex;align-items:center;gap:10px;}
+.story-text{color:#166534;margin-bottom:15px;font-size:1.05rem;}
+.story-text p{margin-bottom:12px;}
+.vocab-box{background:rgba(255,255,255,0.7);border-left:4px solid #22c55e;padding:15px;margin:20px 0;border-radius:0 8px 8px 0;}
+.vocab-title{font-weight:700;color:#15803d;margin-bottom:10px;font-size:1rem;}
+.vocab-item{margin-bottom:8px;font-size:0.95rem;color:#166534;}
+.vocab-item strong{color:#15803d;}
+.article-source{font-size:0.85rem;color:#15803d;font-style:italic;margin-bottom:15px;}
+.question-card{background:#fff;border:2px solid var(--border);border-radius:12px;padding:20px;margin-bottom:15px;}
+.question-num{display:inline-block;background:var(--primary);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-weight:600;font-size:0.9rem;margin-right:10px;}
+.question-text{font-weight:600;color:var(--primary-dark);margin-bottom:15px;font-size:1.05rem;}
+.options{display:grid;gap:10px;}
+.option{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#f5f3ff;border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.2s;}
+.option:hover{border-color:var(--primary-light);background:#ede9ff;}
+.option.selected{border-color:var(--primary);background:#ede9ff;}
+.option.correct{border-color:var(--success);background:#d1fae5;}
+.option.incorrect{border-color:var(--error);background:#fee2e2;}
+.option-letter{width:28px;height:28px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:0.9rem;color:var(--primary-dark);}
+.option.selected .option-letter{background:var(--primary);color:#fff;}
+.option-text{flex:1;color:var(--text);}
+.progress-bar{background:var(--border);border-radius:10px;height:10px;margin-bottom:20px;overflow:hidden;}
+.progress-fill{background:linear-gradient(90deg,var(--primary-light),var(--primary));height:100%;transition:width 0.3s ease;}
+.progress-text{text-align:center;font-size:0.9rem;color:var(--text-light);margin-bottom:10px;}
+.results-card{text-align:center;padding:30px 20px;}
+.results-icon{font-size:4rem;margin-bottom:15px;}
+.results-title{font-family:'Poppins',sans-serif;font-size:1.8rem;color:var(--primary-dark);margin-bottom:10px;}
+.results-score{font-size:3rem;font-weight:700;color:var(--primary);margin:15px 0;}
+.results-message{font-size:1.1rem;color:var(--text-light);margin-bottom:25px;}
+.results-details{background:#f5f3ff;border-radius:10px;padding:15px;margin:20px 0;text-align:left;}
+.results-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
+.results-row:last-child{border-bottom:none;}
+.nav-row{display:flex;gap:10px;margin-top:20px;}
+.nav-row .btn{flex:1;}
+.audio-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;}
+.audio-btn{background:linear-gradient(135deg,var(--primary),var(--primary-light));border:none;color:#fff;padding:10px 18px;border-radius:20px;cursor:pointer;font-size:0.9rem;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:all 0.2s;}
+.audio-btn:hover{transform:scale(1.03);box-shadow:0 4px 15px rgba(91,80,145,0.3);}
+.audio-btn.pause{background:linear-gradient(135deg,var(--accent),#E67E22);}
+.audio-btn.stop{background:linear-gradient(135deg,#e74c3c,#c0392b);}
+.submitted-msg{background:#d1fae5;border:2px solid #10b981;border-radius:10px;padding:15px;text-align:center;color:#065f46;margin-top:20px;}
+.footer-note{text-align:center;padding:20px;color:var(--text-light);font-size:0.85rem;}
+.logo-header{text-align:center;margin-bottom:15px;}
+.logo-small{height:50px;width:auto;}
+</style>
+</head>
+<body>
+<div class="container" id="app"></div>
+<script>
+const SQA_LOGO = "data:image/webp;base64,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";
+
+const READINGS = {
+  A1: {
+    title: 'Ana Learns About Financial Documents',
+    content: '<div class="story-text">\n<p>Ana is new to the United States. She learns about important financial documents this week. A financial document is a paper that shows information about money.</p>\n<p>The first document is a <strong>receipt</strong>. Ana gets a receipt when she buys something at a store. The receipt shows what she bought, how much she paid, and the date. Ana always keeps her receipts.</p>\n<p>The second document is a <strong>bill</strong>. Ana receives a bill every month for her electricity, phone, and rent. A bill shows how much money she needs to pay and the due date. The due date is the last day to pay. Ana pays her bills on time every month.</p>\n<p>The third document is a <strong>bank statement</strong>. Ana receives a bank statement every month from her bank. The bank statement shows all the money that came in (deposits) and went out (withdrawals) from her account. It also shows her current balance. Ana checks her bank statement carefully to make sure everything is correct.</p>\n<p>The fourth document is a <strong>pay stub</strong>. Ana receives a pay stub with every paycheck. The pay stub shows how much she earned and how much was taken out for taxes.</p>\n<p>Ana\'s teacher says: "Always keep copies of your important financial documents. You may need them in the future!"</p>\n</div>\n<div class="vocab-box">\n<div class="vocab-title">📚 Vocabulary Help:</div>\n<div class="vocab-item"><strong>financial document</strong> = a paper that shows information about money</div>\n<div class="vocab-item"><strong>receipt</strong> = a paper you get after buying something</div>\n<div class="vocab-item"><strong>bill</strong> = a paper showing how much money you owe</div>\n<div class="vocab-item"><strong>due date</strong> = the last day to pay</div>\n<div class="vocab-item"><strong>bank statement</strong> = a monthly document showing all activity in your bank account</div>\n<div class="vocab-item"><strong>deposit</strong> = money that goes into your account</div>\n<div class="vocab-item"><strong>withdrawal</strong> = money that comes out of your account</div>\n<div class="vocab-item"><strong>balance</strong> = the total amount of money in your account</div>\n<div class="vocab-item"><strong>pay stub</strong> = a document showing your earnings and deductions</div>\n</div>'
+  },
+  A2B1: {
+    title: 'Roberto Reads His Pay Stub',
+    content: '<div class="story-text">\n<p>Roberto started his new job as a warehouse worker last month. He earns $18.50 per hour and works 40 hours per week. On Friday, he received his first paycheck. Inside the envelope was also a pay stub — a document that explains exactly how his pay was calculated.</p>\n<p>Roberto sat at the kitchen table and studied his pay stub carefully. He found several important numbers. First, he saw his <strong>gross pay: $740.00</strong>. Gross pay is the total amount he earned before any deductions. Roberto thought he would take home $740, but then he noticed a long list of deductions.</p>\n<p>The first deduction was <strong>federal income tax: $74.00</strong>. This money goes to the national government. The second was <strong>state income tax: $22.20</strong>, which went to the state of Illinois. There was also a <strong>Social Security deduction of $45.88</strong> (6.2% of gross pay) and a <strong>Medicare deduction of $10.73</strong> (1.45% of gross pay). Finally, Roberto saw a deduction of <strong>$45.00</strong> for his employer\'s health insurance plan.</p>\n<p>After all these deductions were subtracted, Roberto\'s <strong>net pay was $542.19</strong>. Net pay — sometimes called "take-home pay" — is the actual amount deposited into his bank account.</p>\n<p>Roberto also noticed a column labeled <strong>"YTD,"</strong> which stands for Year-to-Date. This column shows the running totals of his earnings and deductions since January 1st. Since this was his first paycheck, the YTD amounts were the same as this paycheck.</p>\n<p>Roberto was surprised by how much was deducted from his pay. He called his friend Ana, who had been working in the U.S. for three years. "Don\'t worry," Ana said. "The taxes you pay for Social Security and Medicare help you in the future. And when you file your taxes in April, you might get some of that federal tax money back as a refund!" Roberto felt much better. He decided to create a budget to manage his new income wisely.</p>\n</div>\n<div class="vocab-box">\n<div class="vocab-title">📚 Vocabulary Help:</div>\n<div class="vocab-item"><strong>pay stub</strong> = a document showing your earnings and deductions for each pay period</div>\n<div class="vocab-item"><strong>gross pay</strong> = total earnings BEFORE any deductions</div>\n<div class="vocab-item"><strong>deductions</strong> = amounts subtracted from your gross pay</div>\n<div class="vocab-item"><strong>federal income tax</strong> = tax paid to the national U.S. government</div>\n<div class="vocab-item"><strong>Social Security</strong> = a government program that helps retired and disabled people</div>\n<div class="vocab-item"><strong>Medicare</strong> = a government health insurance program for older adults</div>\n<div class="vocab-item"><strong>net pay</strong> = the amount you actually receive after all deductions ("take-home pay")</div>\n<div class="vocab-item"><strong>YTD (Year-to-Date)</strong> = the total accumulated since January 1st of the current year</div>\n<div class="vocab-item"><strong>budget</strong> = a plan for how to spend your money</div>\n</div>'
+  },
+  B2C1: {
+    title: 'Essential Financial Documents Every Adult Should Understand',
+    content: '<div class="article-source">Chicago Tribune — Personal Finance</div>\n<div class="story-text">\n<p>Financial literacy begins with understanding the documents that shape your economic life. For many Americans — and especially for immigrants navigating a new financial system — knowing how to read and interpret key financial documents can mean the difference between financial security and costly mistakes.</p>\n<p>The <strong>pay stub</strong> is perhaps the most frequently encountered financial document for working adults. Issued with each paycheck, a pay stub details gross earnings, itemized deductions, and net pay. Understanding your pay stub allows you to verify that your employer is withholding the correct amounts for taxes and benefits. Payroll discrepancies, while relatively uncommon, do occur and can have significant consequences for both your take-home pay and your eventual tax liability.</p>\n<p><strong>Bank statements</strong>, issued monthly by financial institutions, provide a complete record of account activity including deposits, withdrawals, transfers, and fees. Financial experts recommend reconciling your bank statement — comparing it against your own records of transactions — at least once a month. This practice helps detect errors or unauthorized transactions early, and also builds the habit of tracking spending patterns, which is fundamental to effective budgeting.</p>\n<p>The <strong>credit report</strong> is a critical document that many people overlook until they urgently need it. Maintained by three major bureaus — Equifax, Experian, and TransUnion — your credit report records your borrowing history, including credit cards, loans, and payment records. Employers, landlords, and lenders all use this document to evaluate your financial reliability. Under federal law, every American is entitled to one free credit report from each bureau annually at AnnualCreditReport.com. Reviewing these reports regularly is important because errors are surprisingly common — studies suggest that about 25% of credit reports contain errors significant enough to affect credit scores.</p>\n<p>Derived from your credit report, your <strong>credit score</strong> is a three-digit number (typically ranging from 300 to 850) that summarizes your creditworthiness. A score above 700 is generally considered good, while scores above 750 open doors to the best interest rates on mortgages and car loans. The five factors affecting your score are: payment history (35%), amounts owed (30%), length of credit history (15%), new credit inquiries (10%), and credit mix (10%).</p>\n<p><strong>Tax returns</strong> — the annual documents you file with the IRS — serve double duty as both a legal requirement and a valuable financial record. Many institutions, including mortgage lenders and immigration authorities, require copies of tax returns from previous years as proof of income and financial stability. Experts advise keeping copies of your tax returns for at least seven years, as the IRS generally has three years to audit a return, but can extend this period under certain circumstances.</p>\n<p><strong>Insurance policies</strong> — including health, renters, auto, and life insurance — are equally important to understand thoroughly. Many people sign policies without reading them carefully, only to discover gaps in coverage during a crisis. Key terms to understand include the premium (your regular payment), the deductible (what you pay before insurance begins covering costs), and the coverage limit (the maximum amount the insurer will pay).</p>\n<p>For immigrants in particular, maintaining organized financial records from the earliest stages of life in the United States can pay significant dividends later. Financial documents may be required for visa renewals, citizenship applications, loan approvals, and lease agreements. Building good document habits early is not merely a financial best practice — it is a foundation for broader success in American society.</p>\n</div>\n<div class="vocab-box">\n<div class="vocab-title">📚 Vocabulary Help:</div>\n<div class="vocab-item"><strong>financial literacy</strong> = the ability to understand and manage personal finances</div>\n<div class="vocab-item"><strong>reconciling</strong> = comparing your records against an official document to check for errors</div>\n<div class="vocab-item"><strong>credit report</strong> = a record of your borrowing history maintained by credit bureaus</div>\n<div class="vocab-item"><strong>credit bureaus</strong> = companies that collect and maintain credit information (Equifax, Experian, TransUnion)</div>\n<div class="vocab-item"><strong>credit score</strong> = a number that summarizes your creditworthiness (300-850)</div>\n<div class="vocab-item"><strong>creditworthiness</strong> = how reliable you are at repaying borrowed money</div>\n<div class="vocab-item"><strong>premium</strong> = the regular payment you make for insurance</div>\n<div class="vocab-item"><strong>deductible</strong> = the amount you pay out-of-pocket before insurance covers costs</div>\n<div class="vocab-item"><strong>coverage limit</strong> = the maximum amount an insurer will pay</div>\n</div>'
+  }
+};
+
+const QUESTIONS = {
+  A1: [
+  {q: 'What does a receipt show?', options: ['Only the date of purchase', 'What you bought, how much you paid, and the date', 'Your bank balance', 'How much tax you paid'], correct: 1},
+  {q: 'What is a "due date" on a bill?', options: ['The date you received the bill', 'The last day to pay', 'The date you opened the account', 'The date the bill was printed'], correct: 1},
+  {q: 'What does a bank statement show?', options: ['How much you owe on your credit card', 'Your medical records', 'All the money that came in and went out of your account', 'Your work schedule'], correct: 2},
+  {q: 'What is a pay stub?', options: ['A type of bank account', 'A document showing your earnings and tax deductions', 'A letter from the government', 'A receipt from a store'], correct: 1},
+  {q: "What does Ana's teacher advise her to do?", options: ['Throw away old documents', 'Keep copies of important financial documents', 'Never read bank statements', 'Pay bills late to save money'], correct: 1},
+],
+  A2B1: [
+  {q: "How much is Roberto's gross pay?", options: ['$542.19', '$650.00', '$740.00', '$800.00'], correct: 2},
+  {q: 'What is "gross pay"?', options: ['The amount deposited into your bank account', 'Total earnings before any deductions', 'The total amount paid in taxes', 'The amount after all deductions'], correct: 1},
+  {q: 'How much does Roberto pay for Social Security?', options: ['$10.73', '$22.20', '$45.88', '$74.00'], correct: 2},
+  {q: 'What is "net pay"?', options: ['Total earnings before deductions', 'The amount paid for health insurance', 'The actual take-home amount after all deductions', 'The total of all tax deductions only'], correct: 2},
+  {q: 'What does "YTD" stand for?', options: ['Your Total Debt', 'Year-to-Date', 'Your Tax Deductions', 'Yearly Tax Document'], correct: 1},
+  {q: "Why was Roberto's YTD amount equal to his paycheck amounts?", options: ['His employer made a mistake', 'He worked extra overtime hours', 'It was his first paycheck of the year', 'The government set a new rule'], correct: 2},
+  {q: 'According to Ana, what benefit might Roberto get from paying Social Security and Medicare taxes?', options: ['An immediate cash bonus from his employer', 'Help in the future and possibly a tax refund in April', 'A lower rent payment', 'Free health insurance right away'], correct: 1},
+],
+  B2C1: [
+  {q: 'According to the article, what can pay stub errors affect?', options: ['Only your credit score', 'Your take-home pay and eventual tax liability', 'Only your health insurance coverage', 'Your immigration status'], correct: 1},
+  {q: 'What does "reconciling" a bank statement mean?', options: ['Opening a new bank account', 'Comparing your statement against your own transaction records', 'Depositing money into your account', 'Requesting a refund for bank fees'], correct: 1},
+  {q: 'Which three companies maintain credit reports in the United States?', options: ['Visa, Mastercard, and American Express', 'JPMorgan, Wells Fargo, and Bank of America', 'Equifax, Experian, and TransUnion', 'The IRS, SSA, and FDIC'], correct: 2},
+  {q: 'Approximately what percentage of credit reports contain significant errors?', options: ['5%', '10%', '15%', '25%'], correct: 3},
+  {q: 'Which factor has the GREATEST impact on your credit score?', options: ['Length of credit history', 'New credit inquiries', 'Payment history', 'Credit mix'], correct: 2},
+  {q: 'How long do experts advise keeping copies of your tax returns?', options: ['One year', 'Three years', 'Five years', 'At least seven years'], correct: 3},
+  {q: 'What is a "deductible" in an insurance policy?', options: ['The maximum amount the insurer will pay', 'Your regular premium payment', 'The amount you pay before insurance coverage begins', 'A discount on your annual premium'], correct: 2},
+  {q: 'According to the article, why is maintaining organized financial records especially important for immigrants?', options: ['To avoid paying any taxes', 'Because documents may be required for visa renewals, loans, and citizenship', 'To get better insurance rates automatically', 'Because employers require them every month by law'], correct: 1},
+]
+};
+
+const CLASSES_BY_LEVEL = {
+  A1: [
+    {value: "3071-MW-11AM", label: "3071 - Mon/Wed 11:00 AM (Eunice Salazar)"},
+    {value: "3081-TTH-8PM", label: "3081 - Tue/Thu 8:00 PM (Eunice Salazar)"}
+  ],
+  A2B1: [
+    {value: "3070-MW-9AM", label: "3070 - Mon/Wed 9:00 AM (Eunice Salazar) - A2"},
+    {value: "3072-MW-11AM", label: "3072 - Mon/Wed 11:00 AM (Laura Ebel) - B1"},
+    {value: "3074-MW-8PM", label: "3074 - Mon/Wed 8:00 PM (Laura Ebel) - B1"},
+    {value: "3080-TTH-11AM", label: "3080 - Tue/Thu 11:00 AM (Laura Ebel) - B1"},
+    {value: "3082-TTH-8PM", label: "3082 - Tue/Thu 8:00 PM (Laura Ebel) - B1"},
+    {value: "3085-TTH-945PM", label: "3085 - Tue/Thu 9:45 PM (Eunice Salazar) - B1"}
+  ],
+  B2C1: [
+    {value: "3073-MW-8PM", label: "3073 - Mon/Wed 8:00 PM (Angela Gradiska) - B2"},
+    {value: "3076-MW-945PM", label: "3076 - Mon/Wed 9:45 PM (Angela Gradiska) - B2"},
+    {value: "3079-TTH-11AM", label: "3079 - Tue/Thu 11:00 AM (Tom Bonasera) - B2"},
+    {value: "3083-TTH-8PM", label: "3083 - Tue/Thu 8:00 PM (Angela Gradiska) - B2"},
+    {value: "3084-TTH-945PM", label: "3084 - Tue/Thu 9:45 PM (Angela Gradiska) - B2"},
+    {value: "3075-MW-8PM", label: "3075 - Mon/Wed 8:00 PM (Tom Bonasera) - C1"},
+    {value: "3077-MW-945PM", label: "3077 - Mon/Wed 9:45 PM (Tom Bonasera) - C1"}
+  ]
+};
+
+function getClassOptions() {
+  if (!state.level) return '<option value="">First, select your level above</option>';
+  const classes = CLASSES_BY_LEVEL[state.level] || [];
+  let html = '<option value="">Select your class...</option>';
+  classes.forEach(c => {
+    html += '<option value="' + c.value + '"' + (state.classInfo === c.value ? ' selected' : '') + '>' + c.label + '</option>';
+  });
+  return html;
+}
+
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdAToQoJmHyWuL7ifDiwrdy0fs9-2ha68SI2Uo-1Jg9kFJRHg/formResponse";
+const FORM_FIELDS = {
+  name: "entry.683356736",
+  classInfo: "entry.1442329542",
+  week: "entry.171721789",
+  level: "entry.413464778",
+  score: "entry.971702683",
+  percentage: "entry.1222332572"
+};
+
+const CURRENT_WEEK = "Week 6";
+
+let state = {
+  screen: 'start',
+  name: '',
+  classInfo: '',
+  level: null,
+  currentQuestion: 0,
+  answers: [],
+  submitted: false
+};
+
+let utterance = null;
+let speaking = false;
+let paused = false;
+
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  stopSpeech();
+  utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 0.85;
+  utterance.lang = 'en-US';
+  utterance.onend = () => { speaking = false; paused = false; render(); };
+  utterance.onstart = () => { speaking = true; };
+  window.speechSynthesis.speak(utterance);
+  speaking = true;
+  render();
+}
+
+function pauseSpeech() {
+  if (window.speechSynthesis && speaking) {
+    window.speechSynthesis.pause();
+    paused = true;
+    render();
+  }
+}
+
+function resumeSpeech() {
+  if (window.speechSynthesis && paused) {
+    window.speechSynthesis.resume();
+    paused = false;
+    render();
+  }
+}
+
+function stopSpeech() {
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+    speaking = false;
+    paused = false;
+  }
+}
+
+function speakReading() {
+  const reading = READINGS[state.level];
+  const tmp = document.createElement('div');
+  tmp.innerHTML = reading.content;
+  const text = tmp.textContent || tmp.innerText || '';
+  speak(text);
+}
+
+function render() {
+  const app = document.getElementById('app');
+  if (state.screen === 'start') app.innerHTML = renderStart();
+  else if (state.screen === 'reading') app.innerHTML = renderReading();
+  else if (state.screen === 'questions') app.innerHTML = renderQuestions();
+  else if (state.screen === 'results') app.innerHTML = renderResults();
+}
+
+function renderStart() {
+  return `
+    <div class="logo-header">
+      <img src="${SQA_LOGO}" alt="SQA Education" class="logo-small">
+    </div>
+    <div class="card">
+      <div class="header">
+        <span class="week-badge">WEEK 6</span>
+        <h1>📄 Financial Documents</h1>
+        <p class="subtitle">Reading and Understanding Your Financial Papers</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Full Name</label>
+        <input type="text" class="form-input" id="nameInput" placeholder="Enter your full name" value="${state.name}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Choose Your Level</label>
+        <div class="level-grid">
+          <button class="level-btn ${state.level === 'A1' ? 'selected' : ''}" onclick="selectLevel('A1')">
+            <div class="level-name">A1 - Beginner</div>
+            <div class="level-desc">Simple words and short sentences</div>
+          </button>
+          <button class="level-btn ${state.level === 'A2B1' ? 'selected' : ''}" onclick="selectLevel('A2B1')">
+            <div class="level-name">A2/B1 - Intermediate</div>
+            <div class="level-desc">More details and vocabulary</div>
+          </button>
+          <button class="level-btn ${state.level === 'B2C1' ? 'selected' : ''}" onclick="selectLevel('B2C1')">
+            <div class="level-name">B2/C1 - Advanced</div>
+            <div class="level-desc">Complex topics and analysis</div>
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Class</label>
+        <select class="form-select" id="classSelect">
+          ${getClassOptions()}
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="startReading()" id="startBtn" disabled>
+        Start Reading →
+      </button>
+    </div>
+    <p class="footer-note">SQA Education - Reading and Understanding Your Financial Papers</p>
+  `;
+}
+
+function renderReading() {
+  const reading = READINGS[state.level];
+  const levelLabel = state.level === 'A1' ? 'A1' : state.level === 'A2B1' ? 'A2/B1' : 'B2/C1';
+  const questionCount = QUESTIONS[state.level].length;
+  return `
+    <div class="logo-header">
+      <img src="${SQA_LOGO}" alt="SQA Education" class="logo-small">
+    </div>
+    <div class="card">
+      <div class="header">
+        <span class="week-badge">WEEK 6 • ${levelLabel}</span>
+        <h1>Read the Story</h1>
+        <p class="subtitle">Read carefully, then answer ${questionCount} questions</p>
+      </div>
+      <div class="audio-controls">
+        ${!speaking ? `<button class="audio-btn" onclick="speakReading()">🔊 Listen to Story</button>` : ''}
+        ${speaking && !paused ? `<button class="audio-btn pause" onclick="pauseSpeech()">⏸ Pause</button>` : ''}
+        ${paused ? `<button class="audio-btn" onclick="resumeSpeech()">▶ Resume</button>` : ''}
+        ${speaking || paused ? `<button class="audio-btn stop" onclick="stopSpeech()">⏹ Stop</button>` : ''}
+      </div>
+      <div class="reading-content">
+        <div class="reading-title">📖 ${reading.title}</div>
+        ${reading.content}
+      </div>
+      <button class="btn btn-primary" onclick="startQuestions()">
+        I'm Ready for Questions →
+      </button>
+    </div>
+  `;
+}
+
+function renderQuestions() {
+  const questions = QUESTIONS[state.level];
+  const current = questions[state.currentQuestion];
+  const progress = ((state.currentQuestion + 1) / questions.length) * 100;
+  const levelLabel = state.level === 'A1' ? 'A1' : state.level === 'A2B1' ? 'A2/B1' : 'B2/C1';
+  return `
+    <div class="header" style="padding:20px 0">
+      <span class="week-badge">WEEK 6 • ${levelLabel}</span>
+    </div>
+    <div class="progress-text">Question ${state.currentQuestion + 1} of ${questions.length}</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+    <div class="question-card">
+      <button class="audio-btn" onclick="speak('${current.q.replace(/'/g, "\'")}')" style="margin-bottom:15px;">🔊 Listen</button>
+      <div class="question-text">
+        <span class="question-num">${state.currentQuestion + 1}</span>
+        ${current.q}
+      </div>
+      <div class="options">
+        ${current.options.map((opt, i) => `
+          <div class="option ${state.answers[state.currentQuestion] === i ? 'selected' : ''}" onclick="selectAnswer(${i})">
+            <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+            <span class="option-text">${opt}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="nav-row">
+      ${state.currentQuestion > 0 ? `<button class="btn btn-secondary" onclick="prevQuestion()">← Back</button>` : ''}
+      <button class="btn btn-primary" onclick="nextQuestion()" ${state.answers[state.currentQuestion] === undefined ? 'disabled' : ''}>
+        ${state.currentQuestion < questions.length - 1 ? 'Next →' : 'See Results'}
+      </button>
+    </div>
+  `;
+}
+
+function renderResults() {
+  const questions = QUESTIONS[state.level];
+  let correct = 0;
+  questions.forEach((q, i) => { if (state.answers[i] === q.correct) correct++; });
+  const percentage = Math.round((correct / questions.length) * 100);
+  const passed = percentage >= 60;
+  const levelLabel = state.level === 'A1' ? 'A1' : state.level === 'A2B1' ? 'A2/B1' : 'B2/C1';
+  return `
+    <div class="card">
+      <div class="results-card">
+        <div class="results-icon">${passed ? '🎉' : '📚'}</div>
+        <div class="results-title">${passed ? 'Great Job!' : 'Keep Practicing!'}</div>
+        <div class="results-score">${correct} / ${questions.length}</div>
+        <div style="font-size:1.3rem;margin-bottom:10px;color:var(--primary)">${percentage}%</div>
+        <div class="results-message">${passed ? 'Excellent comprehension!' : 'Read the story again and try once more.'}</div>
+        <div class="results-details">
+          <div class="results-row"><span>Student Name:</span><span>${state.name}</span></div>
+          <div class="results-row"><span>Class:</span><span>${state.classInfo || 'Not selected'}</span></div>
+          <div class="results-row"><span>Level:</span><span>${levelLabel}</span></div>
+          <div class="results-row"><span>Score:</span><span>${correct}/${questions.length} (${percentage}%)</span></div>
+        </div>
+        ${!state.submitted ? `
+          <button class="btn btn-primary" onclick="submitResults()">✓ Submit My Results</button>
+        ` : `
+          <div class="submitted-msg">✅ Your results have been submitted!</div>
+        `}
+        <div class="nav-row">
+          <button class="btn btn-secondary" onclick="startOver()">Try Again</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function selectLevel(level) {
+  state.level = level;
+  state.classInfo = '';
+  render();
+  checkStartBtn();
+}
+
+function checkStartBtn() {
+  const nameInput = document.getElementById('nameInput');
+  const classSelect = document.getElementById('classSelect');
+  const startBtn = document.getElementById('startBtn');
+  if (nameInput) state.name = nameInput.value.trim();
+  if (classSelect) state.classInfo = classSelect.value;
+  if (startBtn) startBtn.disabled = !(state.name && state.level && state.classInfo);
+}
+
+function startReading() {
+  const nameInput = document.getElementById('nameInput');
+  const classSelect = document.getElementById('classSelect');
+  state.name = nameInput ? nameInput.value.trim() : state.name;
+  state.classInfo = classSelect ? classSelect.value : state.classInfo;
+  if (!state.name || !state.level || !state.classInfo) return;
+  stopSpeech();
+  state.screen = 'reading';
+  render();
+}
+
+function startQuestions() {
+  stopSpeech();
+  state.screen = 'questions';
+  state.currentQuestion = 0;
+  state.answers = [];
+  render();
+}
+
+function selectAnswer(index) {
+  state.answers[state.currentQuestion] = index;
+  render();
+}
+
+function prevQuestion() {
+  if (state.currentQuestion > 0) { state.currentQuestion--; render(); }
+}
+
+function nextQuestion() {
+  const questions = QUESTIONS[state.level];
+  if (state.currentQuestion < questions.length - 1) {
+    state.currentQuestion++;
+  } else {
+    state.screen = 'results';
+  }
+  render();
+}
+
+function submitResults() {
+  const questions = QUESTIONS[state.level];
+  let correct = 0;
+  questions.forEach((q, i) => { if (state.answers[i] === q.correct) correct++; });
+  const percentage = Math.round((correct / questions.length) * 100);
+  const levelLabel = state.level === 'A1' ? 'A1' : state.level === 'A2B1' ? 'A2/B1' : 'B2/C1';
+  const formData = new FormData();
+  formData.append(FORM_FIELDS.name, state.name);
+  formData.append(FORM_FIELDS.classInfo, state.classInfo);
+  formData.append(FORM_FIELDS.week, CURRENT_WEEK);
+  formData.append(FORM_FIELDS.level, levelLabel);
+  formData.append(FORM_FIELDS.score, correct + '/' + questions.length);
+  formData.append(FORM_FIELDS.percentage, percentage + '%');
+  fetch(GOOGLE_FORM_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: formData
+  }).then(() => {
+    state.submitted = true;
+    render();
+  }).catch(err => {
+    console.error('Submit error:', err);
+    state.submitted = true;
+    render();
+  });
+}
+
+function startOver() {
+  stopSpeech();
+  state.screen = 'start';
+  state.currentQuestion = 0;
+  state.answers = [];
+  state.submitted = false;
+  render();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  render();
+  document.addEventListener('input', (e) => {
+    if (e.target.id === 'nameInput' || e.target.id === 'classSelect') checkStartBtn();
+  });
+  document.addEventListener('change', (e) => {
+    if (e.target.id === 'classSelect') checkStartBtn();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
